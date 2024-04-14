@@ -1,5 +1,6 @@
 const request = require('supertest');
-const app = require('../index'); // Adjust this path to your Express app's entry point
+const index = require('../index'); // Adjust this path to your Express app's entry point
+const app = index.app;
 
 // Mock data setup for users
 let users = [
