@@ -1,21 +1,27 @@
 const request = require('supertest');
-const app = require('../index'); // Adjust this path to your Express app's entry point
-
-// Mock data setup for todos
-let todos = [
-  { id: 1, title: 'Initial todo', completed: false, userId: 1 }
-];
-
-// Example of resetting the mock data before each test
-beforeEach(() => {
-  todos = [
-    { id: 1, title: 'Initial todo', completed: false, userId: 1 }
-  ];
-  // Here, you should ideally replace the above line with the actual method
-  // to reset your in-memory data to its initial state.
-});
+const index = require('../index'); // Adjust this path to your Express app's entry point
+const app = index.app;
 
 describe('Todo Endpoints', () => {
+  let newTodoId;
+
+  // Example of resetting the mock data before each test
+  beforeEach(async () => {
+    const intialTodo = { title: 'Initial todo', completed: false };
+    const response = await request(app)
+    .post('/todos')
+    .send(intialTodo)
+    expect(response.statusCode).toBe(201);
+    newTodoId = response.body.id; // Save the id for use in tests
+    // Here, you should ideally replace the above line with the actual method
+    // to reset your in-memory data to its initial state.
+  });
+
+  // Clean up after each test
+  afterEach(async () => {
+    await request(app).delete(`/todos/${newTodoId}`);
+  });
+  
   it('should list all todos', async () => {
     const res = await request(app).get('/todos');
     expect(res.statusCode).toEqual(200);
