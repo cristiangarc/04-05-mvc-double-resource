@@ -1,4 +1,12 @@
-let users = [];
+// let users = [
+//     {
+//         id: 1,
+//         name: 'Cristian',
+//         email: 'cgarc1@me.com'
+//     }
+// ];
+
+const users = [];
 
 /**
  * Finds and returns all user items.

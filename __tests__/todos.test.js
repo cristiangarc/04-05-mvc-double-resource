@@ -7,7 +7,7 @@ describe('Todo Endpoints', () => {
 
   // Example of resetting the mock data before each test
   beforeEach(async () => {
-    const intialTodo = { title: 'Initial todo', completed: false };
+    const intialTodo = { title: 'Initial todo', completed: false, userId: 1 };
     const response = await request(app)
     .post('/todos')
     .send(intialTodo)
@@ -79,4 +79,3 @@ describe('Todo Endpoints', () => {
     expect(res.body).toEqual({ message: 'Todo successfully deleted' });
   });
 });
-

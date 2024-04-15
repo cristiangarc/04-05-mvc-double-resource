@@ -42,7 +42,9 @@ const deleteUser = (req, res) => {
     const numId = Number(id);
 
     const deletedUser = deleteById(numId);
-    if (!!deletedUser) res.status(200).send('User successfully deleted');
+    if (!!deletedUser) res.status(200).json({
+        'message': 'User successfully deleted'
+    });
     else res.status(400).send('User not found');
 }
 

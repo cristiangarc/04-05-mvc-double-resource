@@ -8,8 +8,8 @@ app.use(cors());
 const todoRoutes = require('./routes/todoRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-app.use(todoRoutes.router);
-app.use(userRoutes.router);
+app.use('/todos', todoRoutes.router);
+app.use('/users', userRoutes.router);
 
 module.exports = {
     app: app
