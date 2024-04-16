@@ -2,18 +2,23 @@ const request = require('supertest');
 const index = require('../index'); // Adjust this path to your Express app's entry point
 const app = index.app;
 
-// Mock data setup for users
-let users = [
-  { id: 1, name: 'John Doe', email: 'john@example.com' }
-];
+let newUserId;
 
 // Example of resetting the mock data before each test
-beforeEach(() => {
-  users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com' }
-  ];
-  // Here, replace the above line with the actual method
+beforeEach(async () => {
+  const intialUser = { id: 1, name: 'John Doe', email: 'john@example.com' };
+  const response = await request(app)
+    .post('/users')
+    .send(intialUser)
+  expect(response.statusCode).toBe(201);
+  newUserId = response.body.id; // Save the id for use in tests
+  // Here, you should ideally replace the above line with the actual method
   // to reset your in-memory data to its initial state.
+});
+
+// Clean up after each test
+afterEach(async () => {
+  await request(app).delete(`/users/${newUserId}`);
 });
 
 describe('User Endpoints', () => {

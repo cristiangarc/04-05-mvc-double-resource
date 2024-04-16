@@ -16,14 +16,10 @@ const getUser = (req, res) => {
 const createUser = (req, res) => {
     const userToAdd = add(req.body);
     if (!!userToAdd) {
-        users.push(userToAdd);
-        const hasProperLength = users.length === userToAdd.id;
-        if (hasProperLength) {
-            res.status(201).json(userToAdd);
-        }
+        res.status(201).json(userToAdd);
     }
     else {
-        res.status(400).send('Error adding the user');
+        res.status(400).send('Failed to add user: Missing or invalid data');
     }
 }
 

@@ -23,7 +23,9 @@ const findById = (id) => {
 const add = (todo) => {
     const newTodo = JSON.parse(JSON.stringify(todo));
     if (!!newTodo.title && typeof newTodo.completed === 'boolean' && !!newTodo.userId) {
-        newTodo.id = todos.length + 1;
+        if (!newTodo.id) {
+            newTodo.id = todos.length + 1;
+        }
         todos.push(newTodo);
         return newTodo;
     }
