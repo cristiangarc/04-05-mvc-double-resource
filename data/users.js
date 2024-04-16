@@ -1,4 +1,12 @@
-let users = [];
+// let users = [
+//     {
+//         id: 1,
+//         name: 'Cristian',
+//         email: 'cgarc1@me.com'
+//     }
+// ];
+
+const users = [];
 
 /**
  * Finds and returns all user items.
@@ -21,8 +29,10 @@ const findById = (id) => {
  * @returns {Object} The added user item, including its generated ID.
  */
 const add = (user) => {
-    if (user.name && user.email) {
-        user.id = users.length + 1;
+    if (!!user.name && !!user.email) {
+        if (!user.id) {
+            user.id = users.length + 1;
+        }
         users.push(user);
         return user;
     }

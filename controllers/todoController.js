@@ -10,31 +10,25 @@ const getTodo = (req, res) => {
     const numId = Number(id);
     const todoToGet = findById(numId);
     if (!!todoToGet) res.status(200).json(todoToGet);
-    else res.status(400).send('Todo not found');
+    else res.status(404).send('Todo not found');
 }
 
 const createTodo = (req, res) => {
     const todoToAdd = add(req.body);
-    console.log(todoToAdd);
     if (!!todoToAdd) {
-        todos.push(todoToAdd);
-        const hasProperLength = todos.length === todoToAdd.id;
-        if (hasProperLength) {
-            res.status(201).json(todoToAdd);
-        }
+        res.status(201).json(todoToAdd);
     }
     else {
-        res.status(400).send('Error adding the todo');
+        res.status(400).send('Failed to add todo: Missing or invalid data');
     }
 }
 
 const updateTodo = (req, res) => {
     const { id } = req.params;
     const numId = Number(id);
-
     const updatedTodo = updateById(numId, req.body);
     if (!!updatedTodo) res.status(200).json(updatedTodo);
-    else res.status(400).send('Todo not found');
+    else res.status(404).send('Todo not found');
     
 }
 
@@ -43,8 +37,10 @@ const deleteTodo = (req, res) => {
     const numId = Number(id);
 
     const deletedTodo = deleteById(numId);
-    if (!!deletedTodo) res.status(200).send('Todo successfully deleted');
-    else res.status(400).send('Todo not found');
+    if (!!deletedTodo) res.status(200).json({
+        'message': 'Todo successfully deleted'
+    });
+    else res.status(404).send('Todo not found');
 }
 
 module.exports = {

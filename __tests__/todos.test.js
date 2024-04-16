@@ -7,10 +7,10 @@ describe('Todo Endpoints', () => {
 
   // Example of resetting the mock data before each test
   beforeEach(async () => {
-    const intialTodo = { title: 'Initial todo', completed: false };
+    const intialTodo = { title: 'Initial todo', completed: false, userId: 1 };
     const response = await request(app)
-    .post('/todos')
-    .send(intialTodo)
+      .post('/todos')
+      .send(intialTodo)
     expect(response.statusCode).toBe(201);
     newTodoId = response.body.id; // Save the id for use in tests
     // Here, you should ideally replace the above line with the actual method
@@ -61,22 +61,21 @@ describe('Todo Endpoints', () => {
     };
 
     const res = await request(app)
-      .put('/todos/1') // Assuming the todo with id 1 exists
+      .put('/todos/2') // Assuming the todo with id 1 exists
       .send(updatedTodo);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(expect.objectContaining({
-      id: 1,
+      id: 2,
       title: updatedTodo.title,
       completed: updatedTodo.completed
     }));
   });
 
   it('should delete a todo', async () => {
-    const res = await request(app).delete('/todos/1'); // Assuming the todo with id 1 exists
+    const res = await request(app).delete('/todos/2'); // Assuming the todo with id 1 exists
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual({ message: 'Todo successfully deleted' });
   });
 });
-

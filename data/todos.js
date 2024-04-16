@@ -1,6 +1,3 @@
-const usersFunctions = require('./users');
-const allUsers = usersFunctions.findAll();
-
 let todos = [];
 
 /**
@@ -24,13 +21,15 @@ const findById = (id) => {
  * @returns {Object} The added todo item, including its generated ID.
  */
 const add = (todo) => {
-    if (!!todo.title && typeof todo.completed === 'boolean') {
-        const newTodo = { ...todo };
-        newTodo.id = todos.length + 1;
-        newTodo.userId = allUsers[0].id;
+    const newTodo = JSON.parse(JSON.stringify(todo));
+    if (!!newTodo.title && typeof newTodo.completed === 'boolean' && !!newTodo.userId) {
+        if (!newTodo.id) {
+            newTodo.id = todos.length + 1;
+        }
         todos.push(newTodo);
         return newTodo;
     }
+    return null;
 };
 
 /**
