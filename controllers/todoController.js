@@ -16,10 +16,7 @@ const getTodo = (req, res) => {
 const createTodo = (req, res) => {
     const todoToAdd = add(req.body);
     if (!!todoToAdd) {
-        const todoUserId = todoToAdd.userId;
-        if (typeof todoUserId === 'number') {
-            res.status(201).json(todoToAdd);
-        }
+        res.status(201).json(todoToAdd);
     }
     else {
         res.status(400).send('Failed to add todo: Missing or invalid data');
@@ -29,7 +26,6 @@ const createTodo = (req, res) => {
 const updateTodo = (req, res) => {
     const { id } = req.params;
     const numId = Number(id);
-
     const updatedTodo = updateById(numId, req.body);
     if (!!updatedTodo) res.status(200).json(updatedTodo);
     else res.status(404).send('Todo not found');
@@ -41,7 +37,9 @@ const deleteTodo = (req, res) => {
     const numId = Number(id);
 
     const deletedTodo = deleteById(numId);
-    if (!!deletedTodo) res.status(200).send('Todo successfully deleted');
+    if (!!deletedTodo) res.status(200).json({
+        'message': 'Todo successfully deleted'
+    });
     else res.status(404).send('Todo not found');
 }
 
